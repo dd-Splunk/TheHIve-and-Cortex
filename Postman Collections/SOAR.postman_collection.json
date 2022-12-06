@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "b89222d1-cdf4-48b9-80d0-716525493d96",
+		"name": "SOAR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18702614"
+	},
+	"item": [
+		{
+			"name": "Get all Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/ph_user",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"ph_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/ph_user/:userID",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"ph_user",
+						":userID"
+					],
+					"variable": [
+						{
+							"key": "userID",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Automation User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"allowed_ips\": [\"0.0.0.0/16\"],\n    \"username\": \"automation_{{$randomNoun}}\",\n    \"roles\": [\"Automation\"],\n    \"type\": \"automation\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/ph_user",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"ph_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Std User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john.doe@example.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"title\": \"Automation Engineer\",\n    \"location\": \"Palo Alto\",\n    \"time_zone\": \"US/Pacific\",\n    \"password\": \"{{$randomPassword}}\",\n    \"roles\": [8, 14, 23],\n    \"2fa\": \"duo\",\n    \"2fa_username\": \"johndoe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/ph_user",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"ph_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Asset Owner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"asset_owner\",\n    \"first_name\": \"Asset\",\n    \"last_name\": \"Owner\",\n    \"email\": \"asset.owner@soar.com\",\n    \"title\": \"Aasset Owner\",\n    \"location\": \"Brussels\",\n    \"time_zone\": \"Europe/Brussels\",\n    \"password\": \"{{$randomPassword}}\",\n    \"roles\": [5],\n    \"2fa\": \"\",\n    \"2fa_username\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/ph_user",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"ph_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Info on a given roleID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SOAR_SERVER}}/rest/role/:roleID",
+					"host": [
+						"{{SOAR_SERVER}}"
+					],
+					"path": [
+						"rest",
+						"role",
+						":roleID"
+					],
+					"variable": [
+						{
+							"key": "roleID",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Configure TheHive Asset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SOAR_ADMIN_PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"app_guid\": \"08172714-ff65-40cb-aac3-a0f6ede8cb67\",\n    \"name\": \"the-hive.dessy.one\",\n    \"configuration\": {\n        \"base_url\": \"{{SERVER}}:9000\",\n        \"api_key\": \"9w5Rb3imr9n7A2WGx/e0VYKJTPaH/wP8\",\n        \"verify_server_cert\": false,\n        \"timezone\": \"Europe/Brussels\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SOAR_SERVER}}rest/asset",
+					"host": [
+						"{{SOAR_SERVER}}rest"
+					],
+					"path": [
+						"asset"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

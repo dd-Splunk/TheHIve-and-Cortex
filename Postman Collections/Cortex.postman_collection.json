@@ -1,0 +1,460 @@
+{
+	"info": {
+		"_postman_id": "bcc2998b-cfff-43ad-8976-a45b04b2aced",
+		"name": "Cortex",
+		"description": "Configure:\n\n- one Organisation\n- one user in the Organisation that is used as integration with TheHIve\n- two analysers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18702614"
+	},
+	"item": [
+		{
+			"name": "Create Organisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{ORG}}\",\n    \"description\": \"{{ORG}} organization\",\n    \"status\": \"Active\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/organization",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"organization"
+					]
+				},
+				"description": "Create an organisation named {{ORG}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create the orgadmin of the Organisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{ORG}} org Admin\",\n    \"roles\": [\n        \"read\",\n        \"analyze\",\n        \"orgadmin\"\n    ],\n    \"organization\": \"{{ORG}}\",\n    \"login\": \"{{ORG_ADMIN}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/user",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "Create an `orgadmin` user specific for that Organisation"
+			},
+			"response": []
+		},
+		{
+			"name": "Set password of the orgadmin of the Organisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"{{$randomPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/user/{{ORG_ADMIN}}/password/set",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{ORG_ADMIN}}",
+						"password",
+						"set"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API key of the orgadmin of the Organiszation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = responseBody;",
+							"pm.collectionVariables.set(\"ORG_ADMIN_KEY\", data);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/user/{{ORG_ADMIN}}/key/renew",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{ORG_ADMIN}}",
+						"key",
+						"renew"
+					]
+				},
+				"description": "Generate an API token for this `orgadmin` user. This token will be used to generate specific configuration changes into the Organisation. Avoiding the usage of the `superadmin` credentials."
+			},
+			"response": []
+		},
+		{
+			"name": "Create theHive integration user of the Organiszation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ORG_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{ORG}} Integration\",\n    \"roles\": [\n        \"read\",\n        \"analyze\"\n    ],\n    \"organization\": \"{{ORG}}\",\n    \"login\": \"{{ORG_INTEGRATION}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/user",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "This integration user and its API token, will solely be used to allow the integration with Cortex."
+			},
+			"response": []
+		},
+		{
+			"name": "Get theHive integration API key from the integration user of the Organiszation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = responseBody;",
+							"pm.collectionVariables.set(\"THEHIVE_KEY\", data);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ORG_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/user/{{ORG_INTEGRATION}}/key/renew",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{ORG_INTEGRATION}}",
+						"key",
+						"renew"
+					]
+				},
+				"description": "Generate the token that TheHive requires to talk to Cortex."
+			},
+			"response": []
+		},
+		{
+			"name": "Enable Censys Analyzer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ORG_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Censys_1_0\",\n    \"configuration\": {\n        \"uid\": \"XXXX\",\n        \"key\": \"XXXXXXXXXXXXXXXXXXXX\",\n        \"proxy_http\": \"http://proxy:9999\",\n        \"proxy_https\": \"http://proxy:9999\",\n        \"auto_extract_artifacts\": false,\n        \"check_tlp\": true,\n        \"max_tlp\": 2\n    },\n    \"rate\": 1000,\n    \"rateUnit\": \"Day\",\n    \"jobCache\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/organization/analyzer/Censys_1_0",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"organization",
+						"analyzer",
+						"Censys_1_0"
+					]
+				},
+				"description": "Enable the Analyzer as described in the documentation"
+			},
+			"response": []
+		},
+		{
+			"name": "Enable VirusTotal Scan Analyzer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ORG_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"VirusTotal_Scan_3_1\",\n    \"configuration\": {\n        \"key\": \"{{VT_KEY}}\",\n        \"proxy_http\": \"http://proxy:9999\",\n        \"proxy_https\": \"http://proxy:9999\",\n        \"auto_extract_artifacts\": false,\n        \"check_tlp\": true,\n        \"max_tlp\": 2\n    },\n    \"rate\": 1000,\n    \"rateUnit\": \"Day\",\n    \"jobCache\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CORTEX_URL}}/api/organization/analyzer/VirusTotal_Scan_3_1",
+					"host": [
+						"{{CORTEX_URL}}"
+					],
+					"path": [
+						"api",
+						"organization",
+						"analyzer",
+						"VirusTotal_Scan_3_1"
+					]
+				},
+				"description": "Add a VT analyzer. Its API key is stored as {{VT_KEY}} global variable."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SUPER_ADMIN_KEY",
+			"value": "4A0zv/hx97j8KWbXVu6yRnYsZoYnKIc9",
+			"type": "string"
+		},
+		{
+			"key": "CORTEX_URL",
+			"value": "{{SERVER}}:9001",
+			"type": "string"
+		},
+		{
+			"key": "ORG_ADMIN_KEY",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "THEHIVE_KEY",
+			"value": ""
+		}
+	]
+}

@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "66245416-c01a-4757-8600-4fb2ec66235d",
+		"name": "TheHive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18702614"
+	},
+	"item": [
+		{
+			"name": "Create SOAR integration user of the Organiszation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"SOAR Integration\",\n    \"roles\": [\n        \"read\",\n        \"write\",\n        \"alert\"\n    ],\n    \"login\": \"{{SOAR_USER}}\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{THEHIVE_URL}}/api/user",
+					"host": [
+						"{{THEHIVE_URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SOAR integration API key from the integration user of the Organiszation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = responseBody;",
+							"pm.collectionVariables.set(\"SOAR_KEY\", data);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SUPER_ADMIN_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{THEHIVE_URL}}/api/user/{{SOAR_USER}}/key/renew",
+					"host": [
+						"{{THEHIVE_URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{SOAR_USER}}",
+						"key",
+						"renew"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SUPER_ADMIN_KEY",
+			"value": "4A0zv/hx97j8KWbXVu6yRnYsZoYnKIc9",
+			"type": "string"
+		},
+		{
+			"key": "THEHIVE_URL",
+			"value": "{{SERVER}}:9000",
+			"type": "string"
+		},
+		{
+			"key": "SOAR_KEY",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "SOAR_USER",
+			"value": "soar-integration",
+			"type": "string"
+		}
+	]
+}
