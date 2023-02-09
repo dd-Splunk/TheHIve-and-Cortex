@@ -6,7 +6,8 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 ## Steps
 
-- Launch Cortex: 
+- Launch Cortex:
+
   ```bash
    docker compose up -d elasticsearch cortex
   ```
@@ -38,11 +39,13 @@ Make sure you disable zScaler to avoid SSL connections issues
 ![Cortex - Copy API to clipboard](assets/Cortex - Copy API to clipboard.png)
 
 - Open a terminal and start the Cortex configuration:
+
   ```bash
   ./setup.sh <pasted API key>
   ```
 
-- Launch theHIve: 
+- Launch theHIve:
+
   ```bash
   docker compose up -d thehive
   ```
@@ -53,10 +56,7 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Check the Cortex integration ( should be green )
 
-
-
 ## References
 
-https://chinyati.medium.com/the-hive-cortex-through-docker-installation-e50cbadb6cb0
-https://github.com/chinyati/Article-Resources
-
+<https://chinyati.medium.com/the-hive-cortex-through-docker-installation-e50cbadb6cb0>
+<https://github.com/chinyati/Article-Resources>
