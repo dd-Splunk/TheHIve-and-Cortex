@@ -29,7 +29,7 @@ services:
     restart: unless-stopped    
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - '${job_directory}:${job_directory}'
+      - '${job_directory:-/tmp/job-directory}:${job_directory:-/tmp/job-directory}'
     depends_on:
       - elasticsearch
     ports:
