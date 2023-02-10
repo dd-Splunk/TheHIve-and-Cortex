@@ -26,7 +26,9 @@ services:
 
   cortex:
     image: 'thehiveproject/cortex:latest'
-    restart: unless-stopped    
+    restart: unless-stopped
+    environment:
+      - job_directory=${job_directory:-/tmp/job-directory}
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '${job_directory:-/tmp/job-directory}:${job_directory:-/tmp/job-directory}'
