@@ -1,9 +1,8 @@
 #!/bin/bash
 
-
 SUPER_ADMIN_KEY=$1
 
-CORTEX_URL=http://localhost:9001
+CORTEX_URL=http://splunk.dessy.one:9001
 
 ORG=buttercup
 ORG_ADMIN="$ORG-admin"
@@ -11,14 +10,14 @@ ORG_ADMIN_PW=`openssl rand -base64 16`
 ORG_INTEGRATION="$ORG-integration"
 
 # Create Organization
-curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/organization" -d "{
+curl -s -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/organization" -d "{
   \"name\": \"$ORG\",
   \"description\": \"$ORG organization\",
   \"status\": \"Active\"
 }"
 
 # Create the orgadmin of the Organiszation
-curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user" -d "{
+curl -s -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user" -d "{
   \"name\": \"$ORG org Admin\",
   \"roles\": [
     \"read\",
@@ -30,7 +29,7 @@ curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: applic
 }"
 
 # Set the password of the orgadmin of the Organiszation
-curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user/$ORG_ADMIN/password/set" -d "{
+curl -s -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user/$ORG_ADMIN/password/set" -d "{
   \"password\": \"$ORG_ADMIN_PW\"
 }"
 
@@ -38,7 +37,7 @@ curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" -H 'Content-Type: applic
 ORG_ADMIN_KEY=`curl -XPOST -H "Authorization: Bearer $SUPER_ADMIN_KEY" "$CORTEX_URL/api/user/$ORG_ADMIN/key/renew"`
 
 # Create theHive integration user of the Organiszation 
-curl -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user" -d "{
+curl -s -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/user" -d "{
   \"name\": \"$ORG Integration\",
   \"roles\": [
     \"read\",
@@ -57,10 +56,14 @@ echo "job_directory=/tmp/job-directory" >> .env
 echo "ORG=$ORG" >> .env
 
 # Enable VirusTotal Scan Analyzer
-VT_KEY=835c4a41218088e53ce6f605c4d64bae2990e7beb7154139be013d40c5b5e5b0
-curl -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: application/json' "$CORTEX_URL/api/organization/analyzer/:VirusTotal_Scan_3_1 -d "{
+# Get key From 1Password
+VT_KEY=$(op read op://Splunk/virustotal.com/API)
+curl -s -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: application/json' \
+"$CORTEX_URL/api/organization/analyzer/VirusTotal_Scan_3_1" \
+-d "{
   \"name\": \"VirusTotal_Scan_3_1\",
-  \"configuration\": [
-    \"key\": \"$VT_KEY"
-  ]
+  \"configuration\": {
+    \"key\": \"$VT_KEY\"
+  }
 }"
+echo ""
