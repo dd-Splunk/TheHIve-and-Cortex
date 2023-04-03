@@ -3,6 +3,8 @@ services:
   elasticsearch:
     image: 'elasticsearch:7.11.1'
     restart: unless-stopped
+    labels:
+      com.es.description: "Elastic Search"
     ports:
       - '0.0.0.0:9200:9200'
     environment:
@@ -51,7 +53,11 @@ services:
       - '0.0.0.0:9000:9000'
     volumes:
       - t-data:/opt/thp
-    command: "--cortex-keys $CORTEX_KEY --cortex-port 9001"
+    command:
+      - --cortex-keys 
+      - $CORTEX_KEY 
+      - --cortex-port 
+      - "9001"
 
 volumes:
   e-data: {}
