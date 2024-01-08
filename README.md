@@ -12,7 +12,7 @@
 
 - Update Database:
 
-![Cortex - Update DB](/assets/Cortex%20-%20Select%20Users%20tab.png)
+![Cortex - Update DB](/assets/Cortex%20-%20Update%20DB.png)
 
 - Create the initial superadmin user:
 
