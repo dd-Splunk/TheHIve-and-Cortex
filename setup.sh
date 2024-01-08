@@ -57,7 +57,10 @@ echo "ORG=$ORG" >> .env
 
 # Enable VirusTotal Scan Analyzer
 # Get key From 1Password
+# If you don't have 1password (or another vault)
+# You can set this key in .env and retrieve it from there
 VT_KEY=$(op read op://Splunk/virustotal.com/API)
+
 curl -s -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: application/json' \
 "$CORTEX_URL/api/organization/analyzer/VirusTotal_Scan_3_1" \
 -d "{
