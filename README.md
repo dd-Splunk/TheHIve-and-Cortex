@@ -16,7 +16,7 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Update Database:
 
-![Cortex - Update DB](assets/Cortex - Update DB.png)
+![Cortex - Update DB](/assets/assets/Cortex - Update DB.png)
 
 - Create the initial superadmin user:
 
