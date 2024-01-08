@@ -1,9 +1,5 @@
 # The Hive and Cortex
 
-## Important note
-
-Make sure you disable zScaler to avoid SSL connections issues
-
 ## Steps
 
 - Launch Cortex:
