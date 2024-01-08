@@ -20,11 +20,11 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Create the initial superadmin user:
 
-![Cortex - Create admin](/assets/Cortex - Create admin.png)
+![Cortex - Create admin](/assets/Cortex%20-%20Create%20admin.png)
 
 - Login as superadmin:
 
-![Cortex - Initial Login](assets/Cortex - Initial Login.png)
+![Cortex - Initial Login](assets/Cortex%20-%20Initial%20Login.png)
 
 - Select the "Users" tab:
 
