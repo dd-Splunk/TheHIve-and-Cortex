@@ -16,11 +16,11 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Update Database:
 
-![Cortex - Update DB](assets/Cortex - Update DB.png)
+![Cortex - Update DB](/assets/Cortex%20-%20Select%20Users%20tab.png)
 
 - Create the initial superadmin user:
 
-![Cortex - Create admin](assets/Cortex - Create admin.png)
+![Cortex - Create admin](/assets/Cortex - Create admin.png)
 
 - Login as superadmin:
 
@@ -28,15 +28,15 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Select the "Users" tab:
 
-![Cortex - Select Users tab](assets/Cortex - Select Users tab.png)
+![Cortex - Select Users tab](/assets/Cortex%20-%20Select%20Users%20tab.png)
 
 - Create the API key for the superadmin:
 
-![Cortex - Create API](assets/Cortex - Create API.png)
+![Cortex - Create API](/assets/Cortex%20-%20Create%20API.png)
 
 - Copy the API key to the clipboard
 
-![Cortex - Copy API to clipboard](assets/Cortex - Copy API to clipboard.png)
+![Cortex - Copy API to clipboard](assets/Cortex%20-%20Copy%20API%20to%20clipboard.png)
 
 - Open a terminal and start the Cortex configuration:
 
