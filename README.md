@@ -24,7 +24,7 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Login as superadmin:
 
-![Cortex - Initial Login](assets/Cortex%20-%20Initial%20Login.png)
+![Cortex - Initial Login](/assets/Cortex%20-%20Initial%20Login.png)
 
 - Select the "Users" tab:
 
@@ -36,7 +36,7 @@ Make sure you disable zScaler to avoid SSL connections issues
 
 - Copy the API key to the clipboard
 
-![Cortex - Copy API to clipboard](assets/Cortex%20-%20Copy%20API%20to%20clipboard.png)
+![Cortex - Copy API to clipboard](/assets/Cortex%20-%20Copy%20API%20to%20clipboard.png)
 
 - Open a terminal and start the Cortex configuration:
 
