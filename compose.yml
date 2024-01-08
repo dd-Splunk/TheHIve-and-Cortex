@@ -2,6 +2,7 @@ version: '3.8'
 services:
   elasticsearch:
     image: 'elasticsearch:7.11.1'
+    platform: linux/amd64
     restart: unless-stopped
     ports:
       - '0.0.0.0:9200:9200'
@@ -26,6 +27,7 @@ services:
 
   cortex:
     image: 'thehiveproject/cortex:latest'
+    platform: linux/amd64
     restart: unless-stopped
     environment:
       - job_directory=${job_directory:-/tmp/job-directory}
@@ -38,7 +40,8 @@ services:
       - '0.0.0.0:9001:9001'
 
   thehive:
-    image: strangebee/thehive:latest
+    image: strangebee/thehive:5.2
+    platform: linux/amd64
     environment:
       - JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
       - LANG=C.UTF-8
