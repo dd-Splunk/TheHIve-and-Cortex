@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SUPER_ADMIN_KEY=$1
+SUPER_ADMIN_KEY="$1"
 
-CORTEX_URL=http://splunk.dessy.one:9001
+CORTEX_URL=http://localhost:9001
 
 ORG=buttercup
 ORG_ADMIN="$ORG-admin"
