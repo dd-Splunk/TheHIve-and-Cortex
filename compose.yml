@@ -21,6 +21,11 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://elasticsearch:9200"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
     volumes:
       - e-data:/usr/share/elasticsearch/data
       - e-logs:/usr/share/elasticsearch/logs
@@ -35,7 +40,8 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '${job_directory:-/tmp/job-directory}:${job_directory:-/tmp/job-directory}'
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     ports:
       - '0.0.0.0:9001:9001'
 
