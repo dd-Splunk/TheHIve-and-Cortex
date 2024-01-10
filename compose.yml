@@ -23,9 +23,9 @@ services:
         hard: 65536
     healthcheck:
       test: ["CMD", "curl", "-f", "http://elasticsearch:9200"]
-      interval: 10s
+      interval: 5s
       timeout: 10s
-      retries: 10
+      retries: 20
     volumes:
       - e-data:/usr/share/elasticsearch/data
       - e-logs:/usr/share/elasticsearch/logs
@@ -58,6 +58,11 @@ services:
       - cortex
     ports:
       - '0.0.0.0:9000:9000'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://thehive:9000"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
     volumes:
       - t-data:/opt/thp
     command: "--cortex-keys $CORTEX_KEY --cortex-port 9001"
