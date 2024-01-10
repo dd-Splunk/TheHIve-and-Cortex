@@ -40,12 +40,6 @@
   ./setup.sh <pasted API key>
   ```
 
-- Launch theHIve:
-
-  ```bash
-  docker compose up -d thehive
-  ```
-
 - Wait one minute ( theHive is starting up)
 
 - Login as superadmin *( admin / secret )*

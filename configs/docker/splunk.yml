@@ -1,0 +1,9 @@
+services:
+  so1:
+    image: ${SPLUNK_IMAGE:-splunk/splunk:latest}
+    platform: linux/amd64
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD:-changeme}
+    ports:
+      - 8000:8000

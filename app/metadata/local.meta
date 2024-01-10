@@ -1,0 +1,65 @@
+[savedsearches/Splunk_Search_Domain_FQDN_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.017396000
+
+[savedsearches/Splunk_Search_Mail_Email_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.015085000
+
+[savedsearches/Splunk_Search_Mail_Subject_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.007499000
+
+[savedsearches/Splunk_Search_IP_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.010931000
+
+[savedsearches/Splunk_Search_Hash_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.013076000
+
+[savedsearches/Splunk_Search_File_Filename_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.019116000
+
+[savedsearches/Splunk_Search_Other_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.030989000
+
+[savedsearches/Splunk_Search_Registry_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.035604000
+
+[savedsearches/Splunk_Search_URL_URI_Path_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.042814000
+
+[savedsearches/Splunk_Search_User_Agent_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.041125000
+
+[savedsearches/Splunk_Search_User_3_0]
+export = none
+owner = nobody
+version = 9.1.2
+modtime = 1704893593.037890000

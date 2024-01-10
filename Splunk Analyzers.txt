@@ -1,0 +1,11 @@
+Splunk_Search_User_Agent_3_0
+Splunk_Search_Mail_Email_3_0
+Splunk_Search_Hash_3_0
+Splunk_Search_User_3_0
+Splunk_Search_Other_3_0
+Splunk_Search_Registry_3_0
+Splunk_Search_Mail_Subject_3_0
+Splunk_Search_IP_3_0
+Splunk_Search_Domain_FQDN_3_0
+Splunk_Search_URL_URI_Path_3_0
+Splunk_Search_File_Filename_3_0

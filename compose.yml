@@ -36,6 +36,7 @@ services:
     restart: unless-stopped
     environment:
       - job_directory=${job_directory:-/tmp/job-directory}
+      - start_docker=1
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '${job_directory:-/tmp/job-directory}:${job_directory:-/tmp/job-directory}'
@@ -66,6 +67,28 @@ services:
     volumes:
       - t-data:/opt/thp
     command: "--cortex-keys $CORTEX_KEY --cortex-port 9001"
+
+  splunk:
+    extends:
+      file: ./configs/docker/splunk.yml
+      service: so1
+    environment:
+      - SPLUNK_APPS_URL=https://github.com/LetMeR00t/TA-thehive-cortex/releases/download/v3.3/TA-thehive-cortex-3.3.spl
+    volumes:
+      - $PWD/app:/opt/splunk/etc/apps/cortex-s2
+
+
+  splunk-init:
+    build: ./configs/docker/
+    platform: linux/amd64
+    environment:
+      - CORTEX_USER=${CORTEX_USER:-cortex-user}
+      - CORTEX_PASSWORD=${CORTEX_PASSWORD:-changeme2}
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD:-changeme}
+    depends_on:
+      splunk:
+        condition: service_healthy
+        restart: true
 
 volumes:
   e-data: {}
