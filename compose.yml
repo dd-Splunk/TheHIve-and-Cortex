@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
     environment:
       - job_directory=${job_directory:-/tmp/job-directory}
-      - start_docker=1
+      - start_docker=0
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '${job_directory:-/tmp/job-directory}:${job_directory:-/tmp/job-directory}'
