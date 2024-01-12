@@ -1,5 +1,11 @@
 # The Hive and Cortex
 
+This project was initiated to support a demonstration of Splunk SOAR integration
+with Cortex and TheHive.
+
+I needed to build a minimal working stack with Cortex / TheHive to test some
+SOAR playbooks that will interact with the stack.
+
 ## Steps
 
 - Launch Cortex:
