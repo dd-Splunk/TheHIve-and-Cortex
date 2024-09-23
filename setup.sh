@@ -70,3 +70,5 @@ curl -s -XPOST -H "Authorization: Bearer $ORG_ADMIN_KEY" -H 'Content-Type: appli
   }
 }"
 echo ""
+
+docker compose up -d
